@@ -5,8 +5,8 @@ set -e          # exit on any non-0 exit status
 set -o pipefail # exit on any non-0 exit status in pipe
 
 
-### Downloaded files:
-echo '~~~ Downloaded files ~~~'
+### Download files:
+echo '~~~ Download files ~~~'
 # gencode.v49.annotation.gtf.gz:
 wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/gencode.v49.annotation.gtf.gz
 # hg38.chrom.sizes
@@ -32,9 +32,10 @@ cat hg38.chrom.sizes | awk '{print $1"\t"0"\t"$2"\t"$1"|0|"$2"\t"0"\t""+"}' >> h
 bedtools subtract -s -a hg38.chrom.sizes.bed6 -b gencode.v49.annotation.loci.coords.bed6 | ../Utils/bed2gff.pl - | awk -F'\t' '{$3="intergenic"; OFS="\t"; print}' | sed 's/transcript_id/gene_id/g' > gencode.v49.annotation.intergenic.gtf
 echo '+++ DONE +++'
 
-### Combine exons + introns + intergenic:
+### Combine exons + introns + intergenic + egfp:
 echo '~~~ Combine exons + introns + intergenic ~~~'
-cat gencode.v49.annotation.exons.gtf gencode.v49.annotation.introns.gtf gencode.v49.annotation.intergenic.gtf | gzip -9 > gencode.v49.annotation.combined.gtf.gz
+gzip -d egfp.gtf.gz
+cat gencode.v49.annotation.exons.gtf gencode.v49.annotation.introns.gtf gencode.v49.annotation.intergenic.gtf egfp.gtf | gzip -9 > gencode.v49.annotation.combined.gtf.gz
 echo '+++ DONE +++'
 
 ### Compress files to fit GitHub:
