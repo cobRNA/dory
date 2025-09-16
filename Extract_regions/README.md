@@ -22,9 +22,11 @@
 3. Subtract gene coordinates from chr sizes and convert to gtf:
    `bedtools subtract -s -a hg38.chrom.sizes.bed6 -b gencode.v49.annotation.loci.coords.bed6 | ../Utils/bed2gff.pl - | awk -F'\t' '{$3="intergenic"; OFS="\t"; print}' | sed 's/transcript_id/gene_id/g' > gencode.v49.annotation.intergenic.gtf`
 
-### Combine exons + introns + intergenic:
+### Combine exons + introns + intergenic + egfp:
 
-`cat gencode.v49.annotation.exons.gtf gencode.v49.annotation.introns.gtf gencode.v49.annotation.intergenic.gtf | gzip -9 > gencode.v49.annotation.combined.gtf.gz`
+`gzip -d egft.gtf.gz`
+
+`cat gencode.v49.annotation.exons.gtf gencode.v49.annotation.introns.gtf gencode.v49.annotation.intergenic.gtf egfp.gtf | gzip -9 > gencode.v49.annotation.combined.gtf.gz`
 
 ### Compress files to fit GitHub:
 
