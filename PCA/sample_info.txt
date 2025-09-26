@@ -1,0 +1,14 @@
+SampleID	Treatment
+KD_mtSSB_5min	mtSSB_5min
+KD_mtSSB_10min	mtSSB_10min
+KD_mtSSB_20min	mtSSB_20min
+KD_mtSSB_50min	mtSSB_50min
+KD_Twinkle_5min	Twinkle_5min
+KD_Twinkle_10min	Twinkle_10min
+KD_Twinkle_20min	Twinkle_20min
+KD_Twinkle_50min	Twinkle_50min
+Ctrl_5min	Ctrl_5min
+Ctrl_10min	Ctrl_10min
+Ctrl_20min	Ctrl_20min
+Ctrl_50min	Ctrl_50min
+

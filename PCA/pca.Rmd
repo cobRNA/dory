@@ -1,0 +1,63 @@
+
+```{r}
+library(tidyverse)
+
+# Read featureCounts output
+counts <- read.delim("counts.txt", comment.char="#")
+
+# Keep only counts
+rownames(counts) <- counts$Geneid
+counts <- counts[ ,7:ncol(counts)]   # assuming 1–6 are annotation columns
+
+# Convert to a matrix
+counts <- as.matrix(counts)
+
+# Load metadata
+sample_metadata <- read.delim("sample_info.txt", header = TRUE, comment.char="#")
+
+# Rename samples
+colnames(counts) <- sample_metadata$SampleID
+
+# Transform sample metadata
+sample_metadata <- column_to_rownames(sample_metadata, "SampleID")
+
+# Normalize counts
+library(DESeq2)
+
+dds <- DESeqDataSetFromMatrix(countData = counts,
+                              colData = sample_metadata,
+                              design = ~ Treatment)
+#dds <- estimateSizeFactors(dds)
+
+keep <- rowSums(counts(dds)) >= 5 
+dds <- dds[keep, ]
+
+vsd <- vst(dds)  # variance stabilizing transform
+logCPM <- assay(vsd)
+
+plotPCA(vsd, intgroup = "Treatment")
+#+ geom_label(aes(label = name))
+
+```
+
+
+
+
+```{r}
+# Run PCA
+pca <- prcomp(t(logCPM))   # transpose: samples as rows
+
+# Plot PCA
+library(ggplot2)
+
+pca_data <- as.data.frame(pca$x)
+pca_data$Sample <- rownames(pca_data)
+
+ggplot(pca_data, aes(x=PC1, y=PC2, color=Sample)) +
+  geom_point(size=4) +
+  #geom_text(vjust=1.5) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+```
+

@@ -1,0 +1,21 @@
+FROM rocker/tidyverse:4.5.0
+
+# Install system dependencies for DESeq2
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libharfbuzz-dev \
+    libfribidi-dev\
+    && rm -rf /var/lib/apt/lists/*
+
+# Set a user library path
+ENV R_LIBS_USER=/home/rstudio/R/x86_64-pc-linux-gnu-library/4.5
+RUN mkdir -p $R_LIBS_USER && chown -R rstudio:rstudio $R_LIBS_USER
+
+# Switch to R and install DESeq2
+RUN R -e "install.packages('BiocManager')" \
+    && R -e "BiocManager::install(c('DESeq2', 'biomaRt', 'clusterProfiler'))" \
+    && R -e "install.packages(c('pheatmap', 'ggrepel', 'org.Hs.eg.db'))"
+
