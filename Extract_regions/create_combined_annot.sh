@@ -34,8 +34,8 @@ echo '+++ DONE +++'
 
 ### Combine exons + introns + intergenic + egfp:
 echo '~~~ Combine exons + introns + intergenic ~~~'
-gzip -d egfp.gtf.gz
-cat gencode.v49.annotation.exons.gtf gencode.v49.annotation.introns.gtf gencode.v49.annotation.intergenic.gtf egfp.gtf | gzip -9 > gencode.v49.annotation.combined.gtf.gz
+gzip -d egfp_fixed.gtf.gz
+cat gencode.v49.annotation.exons.gtf gencode.v49.annotation.introns.gtf gencode.v49.annotation.intergenic.gtf egfp_fixed.gtf | gzip -9 > gencode.v49.annotation.combined.gtf.gz
 echo '+++ DONE +++'
 
 ### Compress files to fit GitHub:

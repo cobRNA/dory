@@ -1,5 +1,10 @@
 # README
 
+### External files from Dory:
+
+* egfp_fixed.gtf.gz: original file was fixed using:
+  `zcat egfp.gtf.gz | sed 's/unkown exon/unknown\texon/g' | gzip > egfp_fixed.gtf.gz`
+
 ### Downloaded files:
 
 * gencode.v49.annotation.gtf.gz: ([https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/gencode.v49.annotation.gtf.gz]())
