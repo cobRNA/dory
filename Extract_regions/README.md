@@ -2,8 +2,8 @@
 
 ### External files from Dory:
 
-* egfp_fixed.gtf.gz: original file was fixed using:
-  `zcat egfp.gtf.gz | sed 's/unkown exon/unknown\texon/g' | gzip > egfp_fixed.gtf.gz`
+* egfp_fixed.gtf.gz: missing TAB and wrong end coordinate in original file was fixed using:
+  `zcat egfp.gtf.gz | sed 's/unkown exon/unknown\texon/g' | sed 's/1000/717/g' | gzip > egfp_fixed.gtf.gz`
 
 ### Downloaded files:
 
